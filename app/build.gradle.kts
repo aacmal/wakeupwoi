@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.acml.wakeupwoi"
-        minSdk = 29
+        minSdk = 29 // Android 10
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
