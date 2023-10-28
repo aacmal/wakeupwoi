@@ -28,10 +28,13 @@ fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel()) {
             lazyItems(items = alarms) { alarm ->
                 AlarmList(
                     time = alarm.time,
-                    label = alarm.label,
+                    label = "Alarm ${alarms.indexOf(alarm) + 1}",
                     isActive = alarm.isActive,
                     onActiveChange = {
                         alarmViewModel.updateAlarm(alarm.copy(isActive = it))
+                    },
+                    onDelete = {
+                        alarmViewModel.removeAlarm(alarm)
                     }
                 )
             }

@@ -1,7 +1,6 @@
 package com.acml.wakeupwoi.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,28 +13,39 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
+import java.util.UUID
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AlarmList(
-    time: String, isActive: Boolean, label: String = "Alarm", onActiveChange: (Boolean) -> Unit = {}
+    id: UUID = UUID.randomUUID(),
+    time: String,
+    isActive: Boolean,
+    label: String = "Alarm",
+    onActiveChange: (Boolean) -> Unit = {},
+    onDelete: () -> Unit = {}
 ) {
+    var deleteDialog by rememberSaveable { mutableStateOf(false) }
     AnimatedVisibility(
         visible = true
     ) {
-        Card(shape = MaterialTheme.shapes.large,
+        Card(
+            shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.large)
                 .combinedClickable(onClick = {}, onLongClick = {
-                    onActiveChange(!isActive)
+                    deleteDialog = true
                 })
         ) {
             Row(
@@ -64,12 +74,23 @@ fun AlarmList(
         }
 
     }
+    if (deleteDialog) {
+        ConfirmDeleteAlarmDialog(
+            onDismissRequest = {
+                deleteDialog = false
+            },
+            onConfirm = {
+                onDelete()
+                deleteDialog = false
+            }
+        )
+    }
 }
 
 @Preview
 @Composable
 fun AlarmListPreview() {
     WakeupwoiTheme {
-        AlarmList("12:00", true)
+        AlarmList(time ="12:00", isActive = true)
     }
 }
