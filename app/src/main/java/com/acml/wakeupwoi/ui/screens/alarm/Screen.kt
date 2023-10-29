@@ -1,3 +1,6 @@
+package com.acml.wakeupwoi.ui.screens.alarm
+
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,18 +19,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.acml.wakeupwoi.service.AndroidAlarmScheduler
 import com.acml.wakeupwoi.ui.components.AddAlarmBottomSheet
 import com.acml.wakeupwoi.ui.components.AlarmList
-import com.acml.wakeupwoi.ui.screens.alarm.Alarm
-import com.acml.wakeupwoi.ui.screens.alarm.AlarmViewModel
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
 
 @Composable
-fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel()) {
+fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel(), context: Context = LocalContext.current) {
     val alarms = alarmViewModel.getAlarms()
+    val alarmScheduler = AndroidAlarmScheduler(context)
     var showBottomSheet by remember { mutableStateOf(false) }
     Box(modifier = Modifier
         .fillMaxSize()
@@ -35,14 +39,23 @@ fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel()) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             lazyItems(items = alarms) { alarm ->
                 AlarmList(
+                    id = alarm.id,
                     time = String.format("%02d:%02d", alarm.hour, alarm.minute),
                     label = alarm.label,
                     isActive = alarm.isActive,
                     onActiveChange = {
                         alarmViewModel.updateAlarm(alarm.copy(isActive = it))
+                        if (it) {
+                            alarmScheduler.schedule(alarm)
+                        } else {
+                            alarmScheduler.cancel(alarm)
+                        }
                     },
                     onDelete = {
+                        // remove alarm from list
                         alarmViewModel.removeAlarm(alarm)
+                        // cancel alarm
+                        alarmScheduler.cancel(alarm)
                     }
                 )
             }
@@ -65,6 +78,7 @@ fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel()) {
                 alarmViewModel.addAlarm(
                     alarm = it
                 )
+                alarmScheduler.schedule(it)
                 showBottomSheet = false
             }
         )

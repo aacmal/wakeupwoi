@@ -1,6 +1,6 @@
 package com.acml.wakeupwoi
 
-import AlarmScreen
+import com.acml.wakeupwoi.ui.screens.alarm.AlarmScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
