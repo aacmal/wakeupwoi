@@ -7,13 +7,20 @@ import java.util.UUID
 
 data class Alarm(
     val id: UUID = UUID.randomUUID(),
-    val time: String,
+    val hour: Int,
+    val minute: Int,
     val isActive: Boolean,
     val label: String
 )
-class AlarmViewModel: ViewModel() {
+
+class AlarmViewModel : ViewModel() {
     private var alarms = mutableStateListOf<Alarm>(
-        Alarm(id = UUID.randomUUID(), time = "11:00", isActive = false, label = "Alarm 1"),
+        Alarm(
+            id = UUID.randomUUID(),
+            hour = 12,
+            minute = 0,
+            isActive = false, label = "Alarm 1"
+        ),
     )
 
     fun getAlarms(): List<Alarm> {

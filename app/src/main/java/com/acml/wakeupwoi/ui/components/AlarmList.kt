@@ -28,7 +28,7 @@ import java.util.UUID
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AlarmList(
-    id: UUID = UUID.randomUUID(),
+    id: UUID,
     time: String,
     isActive: Boolean,
     label: String = "Alarm",
@@ -91,6 +91,6 @@ fun AlarmList(
 @Composable
 fun AlarmListPreview() {
     WakeupwoiTheme {
-        AlarmList(time ="12:00", isActive = true)
+        AlarmList(id = UUID.randomUUID(), time="12:00", isActive = true)
     }
 }
