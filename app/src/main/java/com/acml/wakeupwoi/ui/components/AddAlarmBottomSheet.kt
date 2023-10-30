@@ -40,7 +40,7 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
         initialHour = 12, initialMinute = 0, is24Hour = true
     );
 
-    var label by remember { mutableStateOf("") }
+    var labelTxt by remember { mutableStateOf("") }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -51,11 +51,14 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
                 TimeInput(state = timePickerState)
             }
-            OutlinedTextField(value = label, onValueChange = {
-                label = it
-            }, label = {
-                Text(text = "Label")
-            }, modifier = Modifier.fillMaxWidth())
+            InputField(
+                value = labelTxt,
+                onChange = {
+                    labelTxt = it
+                },
+                label = "Label",
+                placeholder = "Alarm 1"
+            )
             Button(
                 onClick = {
                     onClickAdd(
@@ -63,7 +66,7 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
                             hour = timePickerState.hour,
                             minute = timePickerState.minute,
                             isActive = true,
-                            label = label
+                            label = labelTxt
                         )
                     )
                     scope.launch {
