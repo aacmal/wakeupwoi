@@ -38,12 +38,9 @@ fun InputField(
                 )
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
-            containerColor = if (value.length >= 0) MaterialTheme.colorScheme.surfaceVariant.copy(
-                alpha = 0.5f
-            ) else Color.Transparent,
         ),
         onValueChange = {
             onChange(it)
