@@ -2,41 +2,38 @@ package com.acml.wakeupwoi.ui.screens.alarm
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import java.util.UUID
+import androidx.lifecycle.viewModelScope
+import com.acml.wakeupwoi.domain.model.Alarm
+import com.acml.wakeupwoi.domain.repository.AlarmRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-data class Alarm(
-    val id: UUID = UUID.randomUUID(),
-    val hour: Int,
-    val minute: Int,
-    val isActive: Boolean,
-    val label: String
-)
-
-class AlarmViewModel : ViewModel() {
-    private var alarms = mutableStateListOf<Alarm>(
-        Alarm(
-            id = UUID.randomUUID(),
-            hour = 12,
-            minute = 0,
-            isActive = false, label = "Alarm 1"
-        ),
-    )
-
-    fun getAlarms(): List<Alarm> {
+@HiltViewModel
+class AlarmViewModel @Inject constructor(
+    private val alarmRepository: AlarmRepository
+) : ViewModel() {
+    private val alarms = alarmRepository.getAllAlarms()
+    fun getAlarms(): Flow<List<Alarm>> {
         return alarms
     }
 
     fun addAlarm(alarm: Alarm) {
-        alarms.add(alarm)
+        viewModelScope.launch {
+            alarmRepository.insertAlarm(alarm)
+        }
     }
 
     fun removeAlarm(alarm: Alarm) {
-        alarms.remove(alarm)
+        viewModelScope.launch {
+            alarmRepository.deleteAlarm(alarm)
+        }
     }
 
     fun updateAlarm(alarm: Alarm) {
-        val index = alarms.indexOfFirst { it.id == alarm.id }
-        alarms[index] = alarm
+        viewModelScope.launch {
+            alarmRepository.updateAlarm(alarm)
+        }
     }
 }

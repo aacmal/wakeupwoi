@@ -23,15 +23,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
+import java.util.Random
 import java.util.UUID
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AlarmList(
-    id: UUID,
+    id: Int,
     time: String,
     isActive: Boolean,
     label: String = "Alarm",
+    isRepeat: Boolean = false,
     onActiveChange: (Boolean) -> Unit = {},
     onDelete: () -> Unit = {}
 ) {
@@ -91,6 +93,6 @@ fun AlarmList(
 @Composable
 fun AlarmListPreview() {
     WakeupwoiTheme {
-        AlarmList(id = UUID.randomUUID(), time="12:00", isActive = true)
+        AlarmList(id = 2, time="12:00", isActive = true)
     }
 }

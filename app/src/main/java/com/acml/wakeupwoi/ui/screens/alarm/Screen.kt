@@ -13,6 +13,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,13 +30,18 @@ import com.acml.wakeupwoi.ui.components.AlarmList
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
 
 @Composable
-fun AlarmScreen(alarmViewModel: AlarmViewModel = viewModel(), context: Context = LocalContext.current) {
-    val alarms = alarmViewModel.getAlarms()
+fun AlarmScreen(
+    alarmViewModel: AlarmViewModel = viewModel(),
+    context: Context = LocalContext.current
+) {
     val alarmScheduler = AndroidAlarmScheduler(context)
+    val alarms by alarmViewModel.getAlarms().collectAsState(initial = emptyList())
     var showBottomSheet by remember { mutableStateOf(false) }
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 16.dp)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             lazyItems(items = alarms) { alarm ->
                 AlarmList(

@@ -1,8 +1,11 @@
-package com.acml.wakeupwoi.data
+package com.acml.wakeupwoi.data.repository
 
+import com.acml.wakeupwoi.data.dao.AlarmDao
+import com.acml.wakeupwoi.domain.model.Alarm
+import com.acml.wakeupwoi.domain.repository.AlarmRepository
 import kotlinx.coroutines.flow.Flow
 
-class OfflineAlarmsRepository(private val alarmDao: AlarmDao): AlarmsRepository{
+class AlarmRepositoryImpl(private val alarmDao: AlarmDao): AlarmRepository {
     override fun getAllAlarms(): Flow<List<Alarm>> = alarmDao.getAll()
 
     override fun getAlarm(id: Int): Flow<Alarm?> = alarmDao.get(id)

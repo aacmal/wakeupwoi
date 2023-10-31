@@ -24,7 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.acml.wakeupwoi.ui.screens.alarm.Alarm
+import com.acml.wakeupwoi.domain.model.Alarm
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 
@@ -66,7 +66,8 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
                             hour = timePickerState.hour,
                             minute = timePickerState.minute,
                             isActive = true,
-                            label = labelTxt
+                            label = labelTxt,
+                            isRepeat = false
                         )
                     )
                     scope.launch {

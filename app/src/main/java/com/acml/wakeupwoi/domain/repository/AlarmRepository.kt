@@ -1,8 +1,9 @@
-package com.acml.wakeupwoi.data
+package com.acml.wakeupwoi.domain.repository
 
+import com.acml.wakeupwoi.domain.model.Alarm
 import kotlinx.coroutines.flow.Flow
 
-interface AlarmsRepository {
+interface AlarmRepository {
     // Retrieve all alarms from the database
     fun getAllAlarms(): Flow<List<Alarm>>
 

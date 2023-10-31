@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context;
 import android.content.Intent
 import android.widget.Toast
-import com.acml.wakeupwoi.ui.screens.alarm.Alarm
+import com.acml.wakeupwoi.domain.model.Alarm
 import java.time.LocalDateTime
 import java.time.ZoneId
 
