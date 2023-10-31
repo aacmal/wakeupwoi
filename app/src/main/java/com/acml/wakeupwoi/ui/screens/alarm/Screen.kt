@@ -28,10 +28,12 @@ import com.acml.wakeupwoi.service.AndroidAlarmScheduler
 import com.acml.wakeupwoi.ui.components.AddAlarmBottomSheet
 import com.acml.wakeupwoi.ui.components.AlarmList
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
+import androidx.hilt.navigation.compose.hiltViewModel
+
 
 @Composable
 fun AlarmScreen(
-    alarmViewModel: AlarmViewModel = viewModel(),
+    alarmViewModel: AlarmViewModel = hiltViewModel(),
     context: Context = LocalContext.current
 ) {
     val alarmScheduler = AndroidAlarmScheduler(context)
