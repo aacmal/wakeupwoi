@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">wakeupwoi</string>
+    <string name="update_alarm">Perbarui Alarm</string>
+    <string name="add_alarm">Tambah Alarm</string>
+    <string name="label_placeholder">Bangun woii!</string>
+</resources>
