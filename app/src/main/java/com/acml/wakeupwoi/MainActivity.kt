@@ -18,11 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.acml.wakeupwoi.ui.screens.alarmdetail.AlarmDetailScreen
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity: ComponentActivity() {
+class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +42,25 @@ class MainActivity: ComponentActivity() {
                             })
                         }
                     ) {
-                        NavHost(navController = navController, startDestination = "alarm", modifier = Modifier.padding(it)){
+                        NavHost(
+                            navController = navController,
+                            startDestination = "alarm",
+                            modifier = Modifier.padding(it)
+                        ) {
                             composable("alarm") {
-                                AlarmScreen()
+                                AlarmScreen(
+                                    onClickAlarm = { id ->
+                                        navController.navigate("alarm/${id}")
+                                    }
+                                )
+                            }
+                            composable("alarm/{id}") { backStackEntry ->
+                                val id = backStackEntry.arguments?.getString("id")?.toInt()
+                                AlarmDetailScreen(
+                                    onClickUpdate = {
+                                        navController.popBackStack()
+                                    }
+                                )
                             }
                         }
                     }

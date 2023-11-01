@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class AlarmRepositoryImpl(private val alarmDao: AlarmDao): AlarmRepository {
     override fun getAllAlarms(): Flow<List<Alarm>> = alarmDao.getAll()
 
-    override fun getAlarm(id: Int): Flow<Alarm?> = alarmDao.get(id)
+    override suspend fun getAlarm(id: Int): Alarm? = alarmDao.getById(id)
 
     override suspend fun insertAlarm(alarm: Alarm) = alarmDao.insert(alarm)
 

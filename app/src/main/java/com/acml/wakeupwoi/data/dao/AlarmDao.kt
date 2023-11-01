@@ -15,7 +15,7 @@ interface AlarmDao {
     fun getAll(): Flow<List<Alarm>>
 
     @Query("SELECT * FROM alarms WHERE id = :id")
-    fun get(id: Int): Flow<Alarm>
+    suspend fun getById(id: Int): Alarm?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(alarm: Alarm)

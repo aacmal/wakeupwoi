@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">wakeupwoi</string>
+    <string name="update_alarm">Update Alarm</string>
 </resources>

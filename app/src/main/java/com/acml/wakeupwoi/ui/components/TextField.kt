@@ -31,13 +31,6 @@ fun InputField(
                 )
             )
         },
-        label = {
-            Text(
-                label, style = TextStyle(
-                    fontSize = 14.sp
-                )
-            )
-        },
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,

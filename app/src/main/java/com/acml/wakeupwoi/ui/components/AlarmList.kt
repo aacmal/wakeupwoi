@@ -35,7 +35,8 @@ fun AlarmList(
     label: String = "Alarm",
     isRepeat: Boolean = false,
     onActiveChange: (Boolean) -> Unit = {},
-    onDelete: () -> Unit = {}
+    onDelete: () -> Unit = {},
+    onEdit: (id: Int) -> Unit = {},
 ) {
     var deleteDialog by rememberSaveable { mutableStateOf(false) }
     AnimatedVisibility(
@@ -46,7 +47,9 @@ fun AlarmList(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.large)
-                .combinedClickable(onClick = {}, onLongClick = {
+                .combinedClickable(onClick = {
+                    onEdit(id)
+                }, onLongClick = {
                     deleteDialog = true
                 })
         ) {

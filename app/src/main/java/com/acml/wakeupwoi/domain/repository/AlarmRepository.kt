@@ -8,7 +8,7 @@ interface AlarmRepository {
     fun getAllAlarms(): Flow<List<Alarm>>
 
     // Retrieve a single alarm from the database
-    fun getAlarm(id: Int): Flow<Alarm?>
+    suspend fun getAlarm(id: Int): Alarm?
 
     // Insert an alarm to the database
     suspend fun insertAlarm(alarm: Alarm)

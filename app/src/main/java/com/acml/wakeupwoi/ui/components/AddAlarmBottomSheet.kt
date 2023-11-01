@@ -1,5 +1,6 @@
 package com.acml.wakeupwoi.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -26,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.acml.wakeupwoi.domain.model.Alarm
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +37,7 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
     val scope = rememberCoroutineScope()
 
     val timePickerState = rememberTimePickerState(
-        initialHour = 12, initialMinute = 0, is24Hour = true
+        initialHour = 12, initialMinute = 0, is24Hour = false
     );
 
     var labelTxt by remember { mutableStateOf("") }

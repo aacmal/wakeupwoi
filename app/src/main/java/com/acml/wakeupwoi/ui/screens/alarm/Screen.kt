@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.acml.wakeupwoi.service.AndroidAlarmScheduler
 import com.acml.wakeupwoi.ui.components.AddAlarmBottomSheet
 import com.acml.wakeupwoi.ui.components.AlarmList
@@ -34,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun AlarmScreen(
     alarmViewModel: AlarmViewModel = hiltViewModel(),
+    onClickAlarm: (id: Int) -> Unit = {},
     context: Context = LocalContext.current
 ) {
     val alarmScheduler = AndroidAlarmScheduler(context)
@@ -64,6 +64,9 @@ fun AlarmScreen(
                         alarmViewModel.removeAlarm(alarm)
                         // cancel alarm
                         alarmScheduler.cancel(alarm)
+                    },
+                    onEdit = {
+                        onClickAlarm(it)
                     }
                 )
             }

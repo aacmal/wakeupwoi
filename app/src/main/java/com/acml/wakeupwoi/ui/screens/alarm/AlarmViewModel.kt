@@ -19,6 +19,10 @@ class AlarmViewModel @Inject constructor(
         return alarms
     }
 
+//    fun getAlarm(id: Int): Flow<Alarm?> {
+//        return alarmRepository.getAlarm(id)
+//    }
+
     fun addAlarm(alarm: Alarm) {
         viewModelScope.launch {
             alarmRepository.insertAlarm(alarm)
