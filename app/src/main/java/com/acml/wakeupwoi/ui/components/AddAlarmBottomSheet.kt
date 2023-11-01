@@ -1,6 +1,5 @@
 package com.acml.wakeupwoi.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -25,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.acml.wakeupwoi.R
 import com.acml.wakeupwoi.domain.model.Alarm
 import kotlinx.coroutines.launch
 
@@ -56,8 +55,7 @@ fun AddAlarmBottomSheet(onDismiss: () -> Unit = {}, onClickAdd: (Alarm) -> Unit 
                 onChange = {
                     labelTxt = it
                 },
-                label = "Label",
-                placeholder = "Alarm 1"
+                placeholder = R.string.label_placeholder
             )
             Button(
                 onClick = {

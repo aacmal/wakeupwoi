@@ -1,6 +1,5 @@
 package com.acml.wakeupwoi.ui.screens.alarm
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acml.wakeupwoi.domain.model.Alarm
@@ -18,10 +17,6 @@ class AlarmViewModel @Inject constructor(
     fun getAlarms(): Flow<List<Alarm>> {
         return alarms
     }
-
-//    fun getAlarm(id: Int): Flow<Alarm?> {
-//        return alarmRepository.getAlarm(id)
-//    }
 
     fun addAlarm(alarm: Alarm) {
         viewModelScope.launch {
