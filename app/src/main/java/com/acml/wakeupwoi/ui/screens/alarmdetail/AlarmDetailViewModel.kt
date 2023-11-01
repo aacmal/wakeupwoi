@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class AlarmDetailState @OptIn(ExperimentalMaterial3Api::class) constructor(
+    val id: Int = 0,
     val timePickerState: TimePickerState = TimePickerState(
         initialHour = 0,
         initialMinute = 0,
@@ -28,7 +29,7 @@ data class AlarmDetailState @OptIn(ExperimentalMaterial3Api::class) constructor(
 @HiltViewModel
 class AlarmDetailViewModel @Inject constructor(
     private val alarmRepository: AlarmRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val alarmId: String? = savedStateHandle["id"]
 
@@ -70,6 +71,7 @@ class AlarmDetailViewModel @Inject constructor(
                 if (alarm != null) {
                     _uiState.update {
                         it.copy(
+                            id = alarm.id,
                             timePickerState = TimePickerState(
                                 initialHour = alarm.hour,
                                 initialMinute = alarm.minute,

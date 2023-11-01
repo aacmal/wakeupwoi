@@ -1,5 +1,6 @@
 package com.acml.wakeupwoi.ui.screens.alarmdetail
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,25 +17,27 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.acml.wakeupwoi.R
+import com.acml.wakeupwoi.domain.model.Alarm
+import com.acml.wakeupwoi.service.AndroidAlarmScheduler
 import com.acml.wakeupwoi.ui.components.InputField
 import com.acml.wakeupwoi.ui.theme.WakeupwoiTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlarmDetailScreen(
-    alarmViewModel: AlarmDetailViewModel = hiltViewModel(), onClickUpdate: () -> Unit = {}
+    alarmViewModel: AlarmDetailViewModel = hiltViewModel(),
+    onClickUpdate: () -> Unit = {},
+    context: Context = LocalContext.current
 ) {
     val alarmData by alarmViewModel.uiState.collectAsState()
-
-    if (alarmData == null) {
-        Text(text = "Alarm not found")
-    }
+    val alarmManager = AndroidAlarmScheduler(context)
 
     Surface {
         Column(
@@ -52,6 +55,16 @@ fun AlarmDetailScreen(
                 onClick = {
                     alarmViewModel.updateAlarm()
                     onClickUpdate()
+                    alarmManager.schedule(
+                        Alarm(
+                            alarmData.id,
+                            alarmData.timePickerState.hour,
+                            alarmData.timePickerState.minute,
+                            alarmData.label,
+                            alarmData.isRepeat,
+                            alarmData.isActive,
+                        )
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
